@@ -1,20 +1,32 @@
 import 'package:flutter/material.dart';
+import 'data/reports_api.dart';
 
 class ReportsPage extends StatelessWidget {
   const ReportsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const Text('Reports', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
-      const SizedBox(height: 16),
-      Wrap(spacing: 16, runSpacing: 16, children: const [
-        _Metric(title: 'Total transactions', value: '24'),
-        _Metric(title: 'Failed', value: '1'),
-        _Metric(title: 'Suspicious', value: '0'),
-        _Metric(title: 'Data quality issues', value: '0'),
-      ])
-    ]);
+    return FutureBuilder(
+      future: ReportsApi().fetchSummary(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState != ConnectionState.done) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (snapshot.hasError) {
+          return Center(child: Text('Failed to load report summary: ${snapshot.error}'));
+        }
+        final summary = snapshot.data!;
+        return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const Text('Reports', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 16),
+          Wrap(spacing: 16, runSpacing: 16, children: [
+            _Metric(title: 'Total transactions', value: '${summary.totalTransactions}'),
+            _Metric(title: 'Failed', value: '${summary.failedTransactions}'),
+            _Metric(title: 'Suspicious', value: '${summary.suspiciousCount}'),
+          ])
+        ]);
+      },
+    );
   }
 }
 

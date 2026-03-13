@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'data/payments_api.dart';
 
 class MakePaymentPage extends StatefulWidget {
   const MakePaymentPage({super.key});
@@ -134,9 +135,29 @@ class _MakePaymentPageState extends State<MakePaymentPage> {
                     ),
                     onPressed: !_isValid
                         ? null
-                        : () {
+                        : () async {
                             if (_formKey.currentState!.validate()) {
-                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Payment submitted (mock)')));
+                              final payload = {
+                                'sourceAccountId': 1,
+                                'destinationAccountNumber': _destination.text.trim(),
+                                'beneficiaryName': _beneficiary.text.trim(),
+                                'amount': double.parse(_amount.text),
+                                'currency': 'EUR',
+                                'description': _description.text.trim(),
+                                'executionDate': _executionDate!.toIso8601String().split('T').first,
+                              };
+                              try {
+                                final result = await PaymentsApi().createPayment(payload);
+                                if (!mounted) return;
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Payment created: ${result['transactionReference']}')),
+                                );
+                              } catch (e) {
+                                if (!mounted) return;
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Failed to submit payment: $e')),
+                                );
+                              }
                             }
                           },
                     child: const Text('Continue'),

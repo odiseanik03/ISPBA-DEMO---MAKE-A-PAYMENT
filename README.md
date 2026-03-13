@@ -33,3 +33,10 @@ No full login form is implemented by design. The frontend uses a minimal entry a
 - Transactions endpoint supports basic query paging/filter params: `status`, `page`, `size`.
 - Error responses now use a consistent envelope with `error`, `message`, `status`, `path`, `timestamp`.
 - Payment creation writes audit records; admin audit endpoint enforces role guard through centralized demo security component.
+
+
+## Next implementation steps
+- Wire all Flutter pages to real backend APIs with loading/error/empty states and role-aware guards.
+- Persist analytics outputs (`reports`, `suspicious_flags`, `data_quality_results`) using SQLAlchemy against PostgreSQL.
+- Add deeper Java tests (controllers, ownership validation, role validation), Python API tests, and Flutter widget/form tests.
+- Add Swagger/OpenAPI docs and API contract examples.
