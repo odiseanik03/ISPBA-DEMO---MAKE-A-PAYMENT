@@ -4,7 +4,7 @@ set -euo pipefail
 require_in_file() {
   local needle="$1"
   local file="$2"
-  if ! rg -F --quiet "$needle" "$file"; then
+  if ! grep -Fq "$needle" "$file"; then
     echo "[contracts] missing '$needle' in $file" >&2
     exit 1
   fi

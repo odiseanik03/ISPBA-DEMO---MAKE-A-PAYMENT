@@ -47,7 +47,7 @@ class PaymentControllerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .header("X-Demo-User-Id", "1")
             .content("""
-                {"sourceAccountId":1,"destinationAccountNumber":"BAD","beneficiaryName":"","amount":0,"currency":"EURO","description":"x","executionDate":null}
+                {"sourceAccountId":1,"destinationAccountNumber":"BAD","beneficiaryName":"","amount":0,"currency":"EURO","description":"x","executionDate":"2030-01-01"}
                 """))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$.error").value("VALIDATION_ERROR"))

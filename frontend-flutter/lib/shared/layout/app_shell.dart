@@ -9,7 +9,10 @@ class AppShell extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final path = GoRouterState.of(context).uri.path;
+    String path = '/dashboard';
+    try {
+      path = GoRouterState.of(context).uri.path;
+    } catch (_) {}
     final session = ref.watch(sessionProvider);
 
     return LayoutBuilder(
