@@ -128,3 +128,45 @@ Response:
   "timestamp": "2026-03-15T08:00:00Z"
 }
 ```
+
+## Analytics
+
+### POST `/analytics/run/risk-check`
+Response:
+```json
+{
+  "status": "accepted",
+  "job": "risk-check"
+}
+```
+
+### POST `/analytics/run/data-quality`
+Response:
+```json
+{
+  "status": "accepted",
+  "job": "data-quality"
+}
+```
+
+### POST `/analytics/run/daily-report`
+Response:
+```json
+{
+  "status": "accepted",
+  "job": "daily-report"
+}
+```
+
+### GET `/analytics/reports/latest`
+Response:
+```json
+{
+  "daily": {
+    "totalTransactions": 42,
+    "successfulTransactions": 39,
+    "failedTransactions": 3,
+    "suspiciousCount": 5
+  }
+}
+```

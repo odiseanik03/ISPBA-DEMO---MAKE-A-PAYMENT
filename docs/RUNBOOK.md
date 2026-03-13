@@ -60,3 +60,13 @@
 - [ ] `compose-smoke` job passes in CI.
 - [ ] Swagger endpoint and API contracts are in sync.
 - [ ] Demo smoke script passes in local/staging environment.
+
+
+## 7) Latest validation status (this branch)
+- ✅ Shell scripts syntax checks passed.
+- ✅ Python source/test compile checks passed.
+- ⚠️ Full local compose e2e could not be executed in this environment (no docker binary available).
+- ⚠️ Full Flutter test execution could not be executed in this environment (flutter SDK unavailable).
+- ⚠️ Full Python dependency install from package index failed in this environment due proxy/network restrictions.
+
+Use CI `accountflow-ci` as the source of truth for green go/no-go once all jobs pass.

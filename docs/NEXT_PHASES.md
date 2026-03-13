@@ -4,7 +4,7 @@
 
 Estimated overall completion: **~78%**.
 
-Why 70%:
+Why 78%:
 - Core architecture and feature scaffolding are in place for backend, analytics, frontend, docs, and compose orchestration.
 - Hardening work has progressed (CI pipeline, stronger smoke scripts with DB assertions, persistence tests, role-aware behavior).
 - The remaining gap is mostly integration depth, production polish, and release-grade reliability.

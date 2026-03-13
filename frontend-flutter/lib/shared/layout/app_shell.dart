@@ -52,6 +52,7 @@ class AppShell extends ConsumerWidget {
 
   Widget _nav(BuildContext context, String path, bool isAdmin) {
     return ListView(
+      semanticChildCount: isAdmin ? 6 : 5,
       padding: const EdgeInsets.all(16),
       children: [
         const Text('AccountFlow', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
@@ -75,7 +76,7 @@ class AppShell extends ConsumerWidget {
         backgroundColor: active ? const Color(0xFFFF7A00) : const Color(0xFFE5E7EB),
         radius: 12,
       ),
-      title: Text(title),
+      title: Semantics(label: 'Navigation item $title', child: Text(title)),
       onTap: () => context.go(route),
     );
   }
