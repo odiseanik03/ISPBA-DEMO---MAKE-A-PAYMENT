@@ -23,6 +23,21 @@ class _MakePaymentPageState extends State<MakePaymentPage> {
       (double.tryParse(_amount.text) ?? 0) > 0 &&
       _executionDate != null;
 
+
+  @override
+  void initState() {
+    super.initState();
+    _executionDate = DateTime.now();
+  }
+
+  @override
+  void dispose() {
+    _beneficiary.dispose();
+    _destination.dispose();
+    _amount.dispose();
+    _description.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(

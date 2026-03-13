@@ -31,7 +31,7 @@ def run_risk_check() -> JobAccepted:
 
 @router.get("/reports/latest")
 def reports_latest() -> dict[str, dict[str, int]]:
-    r = _daily.generate()
+    r = _daily.latest()
     return {
         "daily": {
             "totalTransactions": r.total_transactions,

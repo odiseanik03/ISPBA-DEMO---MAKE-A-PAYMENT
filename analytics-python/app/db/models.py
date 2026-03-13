@@ -1,5 +1,5 @@
 from sqlalchemy.orm import declarative_base
-from sqlalchemy import Column, BigInteger, String, Numeric, Date, Boolean
+from sqlalchemy import Column, BigInteger, String, Numeric, Date, Boolean, DateTime
 
 Base = declarative_base()
 
@@ -27,9 +27,12 @@ class DataQualityResult(Base):
 class Transaction(Base):
     __tablename__ = "transactions"
     id = Column(BigInteger, primary_key=True)
+    transaction_reference = Column(String)
+    destination_account_number = Column(String)
     amount = Column(Numeric)
     status = Column(String)
     risk_flag = Column(Boolean)
+    created_at = Column(DateTime(timezone=True))
 
 
 class SuspiciousFlag(Base):
