@@ -22,7 +22,11 @@ run_or_warn() {
 }
 
 echo "[phase] shell checks"
-bash -n scripts/bootstrap.sh scripts/demo-smoke.sh scripts/e2e-compose-check.sh scripts/phase-validate.sh
+bash -n scripts/bootstrap.sh scripts/demo-smoke.sh scripts/e2e-compose-check.sh scripts/phase-validate.sh scripts/final-phase.sh scripts/validate-contracts.sh
+
+
+echo "[phase] contracts/docs sync checks"
+./scripts/validate-contracts.sh
 
 echo "[phase] python compile checks"
 python3 -m compileall analytics-python/app analytics-python/tests

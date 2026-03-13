@@ -20,6 +20,9 @@ Run the single final-phase orchestrator:
 Or run strict validation directly:
 - `STRICT_VALIDATION=true ./scripts/phase-validate.sh`
 
+Validate API contracts sync explicitly:
+- `./scripts/validate-contracts.sh`
+
 ## 4) Smoke checks covered by scripts
 - `GET /api/health`
 - `POST /api/demo/session`
@@ -44,6 +47,7 @@ Or run strict validation directly:
 - [ ] `java-tests` job passes in CI.
 - [ ] `flutter-tests` job passes in CI.
 - [ ] `shell-checks` job passes in CI.
+- [ ] `contracts-sync` job passes in CI.
 - [ ] `compose-smoke` job passes in CI.
 - [ ] Swagger endpoint and API contracts are in sync.
 - [ ] Demo smoke script passes in local/staging environment.
@@ -51,6 +55,7 @@ Or run strict validation directly:
 ## 7) Latest validation status (this branch)
 - ✅ Shell scripts syntax checks passed.
 - ✅ Python source/test compile checks passed.
+- ✅ API contracts sync script checks passed (`./scripts/validate-contracts.sh`).
 - ⚠️ Full local compose e2e could not be executed in this environment (no docker binary available).
 - ⚠️ Full Flutter test execution could not be executed in this environment (flutter SDK unavailable).
 - ⚠️ Full Python dependency install from package index failed in this environment due proxy/network restrictions.

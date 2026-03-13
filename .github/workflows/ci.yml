@@ -69,11 +69,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: bash -n scripts/bootstrap.sh scripts/demo-smoke.sh scripts/e2e-compose-check.sh scripts/phase-validate.sh
+      - run: bash -n scripts/bootstrap.sh scripts/demo-smoke.sh scripts/e2e-compose-check.sh scripts/phase-validate.sh scripts/final-phase.sh scripts/validate-contracts.sh
+
+  contracts-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./scripts/validate-contracts.sh
 
   compose-smoke:
     runs-on: ubuntu-latest
-    needs: [python-tests, python-postgres-integration, java-tests, shell-checks]
+    needs: [python-tests, python-postgres-integration, java-tests, flutter-tests, shell-checks, contracts-sync]
     steps:
       - uses: actions/checkout@v4
       - run: chmod +x scripts/e2e-compose-check.sh scripts/demo-smoke.sh
