@@ -26,7 +26,17 @@ class DataQualityService:
         from app.db.models import DataQualityResult
         from app.db.session import SessionLocal
 
+        today = date.today()
         with SessionLocal() as db:
-            for check in checks:
-                db.add(DataQualityResult(check_name=check, issue_count=0, report_date=date.today()))
-            db.commit()
+            try:
+                for check in checks:
+                    exists = db.query(DataQualityResult).filter(
+                        DataQualityResult.check_name == check,
+                        DataQualityResult.report_date == today,
+                    ).first()
+                    if exists is None:
+                        db.add(DataQualityResult(check_name=check, issue_count=0, report_date=today))
+                db.commit()
+            except Exception:
+                db.rollback()
+                raise

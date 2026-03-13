@@ -52,3 +52,5 @@ No full login form is implemented by design. The frontend uses a minimal entry a
 ## Runbook and demo checks
 - Operational runbook: `docs/RUNBOOK.md`
 - Automated demo smoke checks: `./scripts/demo-smoke.sh`
+
+- Full local E2E validation: `./scripts/e2e-compose-check.sh`

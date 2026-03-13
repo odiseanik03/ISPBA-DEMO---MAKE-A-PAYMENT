@@ -19,3 +19,7 @@
 
 ## Notes
 - To enable analytics DB writes in local compose, `ENABLE_DB_PERSIST=true` is set for analytics service.
+
+
+## End-to-end check
+- Run `./scripts/e2e-compose-check.sh` to boot full stack and execute smoke checks.
