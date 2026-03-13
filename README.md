@@ -8,7 +8,9 @@ AccountFlow is a portfolio-grade banking-style demo platform with:
 - Docker Compose orchestration
 
 ## Current status
-This repository now includes **Phase 1 scaffolding** for all modules and baseline configuration.
+This repository now includes completed baseline implementation across the three services
+plus hardening updates (CI pipeline, analytics persistence hooks, role-aware navigation,
+runbook, and smoke scripts).
 
 ## Quick start
 1. Copy env templates:
@@ -35,11 +37,13 @@ No full login form is implemented by design. The frontend uses a minimal entry a
 - Payment creation writes audit records; admin audit endpoint enforces role guard through centralized demo security component.
 
 
-## Next implementation steps
-- Wire all Flutter pages to real backend APIs with loading/error/empty states and role-aware guards.
-- Persist analytics outputs (`reports`, `suspicious_flags`, `data_quality_results`) using SQLAlchemy against PostgreSQL.
-- Add deeper Java tests (controllers, ownership validation, role validation), Python API tests, and Flutter widget/form tests.
-- Add Swagger/OpenAPI docs and API contract examples.
+## Remaining implementation focus
+- Run and pass full end-to-end validation in a runnable environment (compose boot + smoke + test matrix).
+- Harden analytics persistence with richer rules, idempotency semantics, and Postgres-backed integration tests.
+- Complete frontend production polish (responsive spacing, consistency, accessibility pass, screenshot parity checks).
+- Expand release readiness with stricter CI quality gates (linting, artifact checks, repeatable release verification).
+
+See `docs/NEXT_PHASES.md` for a phase-by-phase plan with completion estimate.
 
 
 ## API documentation
