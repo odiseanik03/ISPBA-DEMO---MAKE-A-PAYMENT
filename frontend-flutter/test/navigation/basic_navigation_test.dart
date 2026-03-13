@@ -9,7 +9,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          sessionProvider.overrideWith((ref) => const SessionState(authenticated: true, role: 'ADMIN')),
+          sessionProvider.overrideWith((ref) => StateController(const SessionState(authenticated: true, role: 'ADMIN'))),
         ],
         child: const MaterialApp(
           home: AppShell(
@@ -26,7 +26,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          sessionProvider.overrideWith((ref) => const SessionState(authenticated: true, role: 'CUSTOMER')),
+          sessionProvider.overrideWith((ref) => StateController(const SessionState(authenticated: true, role: 'CUSTOMER'))),
         ],
         child: const MaterialApp(
           home: AppShell(

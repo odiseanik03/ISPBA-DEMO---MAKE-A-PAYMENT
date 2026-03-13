@@ -31,7 +31,7 @@ class ReportsControllerTest {
 
   @Test
   void shouldReturnSuspiciousFlags() throws Exception {
-    when(reportsService.suspiciousFlags()).thenReturn(List.of(new SuspiciousFlagResponse(1L, "AMOUNT_THRESHOLD", "HIGH")));
+    when(reportsService.suspiciousFlags()).thenReturn(List.of(new SuspiciousFlagResponse(10L, 1L, "AMOUNT_THRESHOLD", "Amount too high", "HIGH", "2026-01-01T00:00:00Z")));
 
     mockMvc.perform(get("/api/reports/suspicious-flags"))
         .andExpect(status().isOk())
