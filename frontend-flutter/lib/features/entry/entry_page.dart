@@ -19,7 +19,8 @@ class EntryPage extends ConsumerWidget {
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
-                ref.read(sessionProvider.notifier).state = true;
+                ref.read(sessionProvider.notifier).state =
+                    const SessionState(authenticated: true, role: 'CUSTOMER');
                 context.go('/dashboard');
               },
               child: const Text('Enter Portal'),

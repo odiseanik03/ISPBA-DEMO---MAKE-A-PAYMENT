@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../core/state/session_provider.dart';
 
-class AppShell extends StatelessWidget {
+class AppShell extends ConsumerWidget {
   final Widget child;
   const AppShell({super.key, required this.child});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final path = GoRouterState.of(context).uri.path;
+    final session = ref.watch(sessionProvider);
+
     return Scaffold(
       body: Row(
         children: [
@@ -24,7 +28,7 @@ class AppShell extends StatelessWidget {
                 _item(context, '/payments/new', 'Make payment', path),
                 _item(context, '/transactions', 'Transactions', path),
                 _item(context, '/reports', 'Reports', path),
-                _item(context, '/admin/audit-logs', 'Audit logs', path),
+                if (session.role == 'ADMIN') _item(context, '/admin/audit-logs', 'Audit logs', path),
               ],
             ),
           ),

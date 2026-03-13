@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/state/session_provider.dart';
 import 'data/audit_logs_api.dart';
 
-class AuditLogsPage extends StatefulWidget {
+class AuditLogsPage extends ConsumerStatefulWidget {
   const AuditLogsPage({super.key});
 
   @override
-  State<AuditLogsPage> createState() => _AuditLogsPageState();
+  ConsumerState<AuditLogsPage> createState() => _AuditLogsPageState();
 }
 
-class _AuditLogsPageState extends State<AuditLogsPage> {
+class _AuditLogsPageState extends ConsumerState<AuditLogsPage> {
   int page = 0;
 
   @override
   Widget build(BuildContext context) {
+    final session = ref.watch(sessionProvider);
+    if (session.role != 'ADMIN') {
+      return const Center(child: Text('Admin access required for audit logs.'));
+    }
+
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       const Text('Audit logs', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
       const SizedBox(height: 12),
@@ -27,6 +34,9 @@ class _AuditLogsPageState extends State<AuditLogsPage> {
               return Center(child: Text('Failed to load audit logs: ${snapshot.error}'));
             }
             final items = snapshot.data ?? [];
+            if (items.isEmpty) {
+              return const Center(child: Text('No audit logs found.'));
+            }
             return Column(children: [
               Expanded(
                 child: Card(

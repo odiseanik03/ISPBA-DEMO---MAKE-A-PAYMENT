@@ -40,3 +40,7 @@ No full login form is implemented by design. The frontend uses a minimal entry a
 - Persist analytics outputs (`reports`, `suspicious_flags`, `data_quality_results`) using SQLAlchemy against PostgreSQL.
 - Add deeper Java tests (controllers, ownership validation, role validation), Python API tests, and Flutter widget/form tests.
 - Add Swagger/OpenAPI docs and API contract examples.
+
+
+## API documentation
+- See `docs/API_CONTRACTS.md` for concrete request/response examples.
