@@ -2,7 +2,9 @@ package com.accountflow.reports.controller;
 
 import com.accountflow.reports.dto.DailyReportResponse;
 import com.accountflow.reports.dto.ReportsSummaryResponse;
+import com.accountflow.reports.dto.SuspiciousFlagResponse;
 import com.accountflow.reports.service.ReportsService;
+import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,4 +23,7 @@ public class ReportsController {
 
   @GetMapping("/summary")
   public ReportsSummaryResponse summary() { return reportsService.summary(); }
+
+  @GetMapping("/suspicious-flags")
+  public List<SuspiciousFlagResponse> suspiciousFlags() { return reportsService.suspiciousFlags(); }
 }

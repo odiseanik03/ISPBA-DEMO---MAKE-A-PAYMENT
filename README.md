@@ -26,3 +26,10 @@ No full login form is implemented by design. The frontend uses a minimal entry a
 - Core APIs added: `/api/accounts`, `/api/payments`, `/api/transactions`, `/api/reports/daily`, `/api/reports/summary`, `/api/admin/audit-logs`.
 - Admin demo access for audit endpoint is controlled by header: `X-Demo-Role: ADMIN`.
 - Frontend pages added: Dashboard, Accounts, Make Payment, Transactions, Reports, Audit Logs.
+
+
+## Phase 3-4 progress
+- Reports endpoint now includes `GET /api/reports/suspicious-flags`.
+- Transactions endpoint supports basic query paging/filter params: `status`, `page`, `size`.
+- Error responses now use a consistent envelope with `error`, `message`, `status`, `path`, `timestamp`.
+- Payment creation writes audit records; admin audit endpoint enforces role guard through centralized demo security component.
