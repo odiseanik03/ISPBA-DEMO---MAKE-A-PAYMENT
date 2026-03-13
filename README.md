@@ -44,3 +44,11 @@ No full login form is implemented by design. The frontend uses a minimal entry a
 
 ## API documentation
 - See `docs/API_CONTRACTS.md` for concrete request/response examples.
+
+
+## OpenAPI / Swagger
+- Swagger UI: `http://localhost:8080/swagger-ui/index.html`
+
+## Runbook and demo checks
+- Operational runbook: `docs/RUNBOOK.md`
+- Automated demo smoke checks: `./scripts/demo-smoke.sh`

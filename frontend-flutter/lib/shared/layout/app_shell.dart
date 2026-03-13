@@ -12,42 +12,57 @@ class AppShell extends ConsumerWidget {
     final path = GoRouterState.of(context).uri.path;
     final session = ref.watch(sessionProvider);
 
-    return Scaffold(
-      body: Row(
-        children: [
-          Container(
-            width: 250,
-            color: Colors.white,
-            child: ListView(
-              padding: const EdgeInsets.all(16),
-              children: [
-                const Text('AccountFlow', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
-                const SizedBox(height: 24),
-                _item(context, '/dashboard', 'Dashboard', path),
-                _item(context, '/accounts', 'Accounts', path),
-                _item(context, '/payments/new', 'Make payment', path),
-                _item(context, '/transactions', 'Transactions', path),
-                _item(context, '/reports', 'Reports', path),
-                if (session.role == 'ADMIN') _item(context, '/admin/audit-logs', 'Audit logs', path),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Column(
-              children: [
-                Container(
-                  height: 72,
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  color: const Color(0xFFF8F8F8),
-                  alignment: Alignment.centerLeft,
-                  child: const Text('How can we help you today?', style: TextStyle(color: Colors.black54)),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final mobile = constraints.maxWidth < 900;
+        final nav = _nav(context, path, session.role == 'ADMIN');
+
+        if (mobile) {
+          return Scaffold(
+            drawer: Drawer(child: nav),
+            appBar: AppBar(title: const Text('AccountFlow')),
+            body: Padding(padding: const EdgeInsets.all(12), child: child),
+          );
+        }
+
+        return Scaffold(
+          body: Row(
+            children: [
+              Container(width: 250, color: Colors.white, child: nav),
+              Expanded(
+                child: Column(
+                  children: [
+                    Container(
+                      height: 72,
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      color: const Color(0xFFF8F8F8),
+                      alignment: Alignment.centerLeft,
+                      child: const Text('How can we help you today?', style: TextStyle(color: Colors.black54)),
+                    ),
+                    Expanded(child: Padding(padding: const EdgeInsets.all(24), child: child))
+                  ],
                 ),
-                Expanded(child: Padding(padding: const EdgeInsets.all(24), child: child))
-              ],
-            ),
-          )
-        ],
-      ),
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _nav(BuildContext context, String path, bool isAdmin) {
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        const Text('AccountFlow', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
+        const SizedBox(height: 24),
+        _item(context, '/dashboard', 'Dashboard', path),
+        _item(context, '/accounts', 'Accounts', path),
+        _item(context, '/payments/new', 'Make payment', path),
+        _item(context, '/transactions', 'Transactions', path),
+        _item(context, '/reports', 'Reports', path),
+        if (isAdmin) _item(context, '/admin/audit-logs', 'Audit logs', path),
+      ],
     );
   }
 
