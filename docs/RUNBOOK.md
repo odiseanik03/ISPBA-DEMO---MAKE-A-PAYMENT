@@ -12,27 +12,13 @@
 - FastAPI analytics: `http://localhost:8090`
 - PostgreSQL: `localhost:5432`
 
-## 3) Validation commands by phase
+## 3) Final phase execution
 
-### Phase A — integrated validation
-- Full stack + smoke + DB assertions:
-  - `./scripts/e2e-compose-check.sh`
+Run the single final-phase orchestrator:
+- `./scripts/final-phase.sh`
 
-### Phase B — analytics semantics and persistence quality
-- Analytics tests:
-  - `PYTHONPATH=analytics-python pytest analytics-python/tests -q`
-- Focused persistence tests:
-  - `PYTHONPATH=analytics-python pytest analytics-python/tests/test_sqlite_persistence.py -q`
-
-### Phase C — frontend quality
-- Flutter test suite:
-  - `cd frontend-flutter && flutter test`
-
-### Phase D — release gates
-- Java tests:
-  - `cd backend-java && mvn -q test`
-- Shell scripts syntax checks:
-  - `bash -n scripts/bootstrap.sh scripts/demo-smoke.sh scripts/e2e-compose-check.sh`
+Or run strict validation directly:
+- `STRICT_VALIDATION=true ./scripts/phase-validate.sh`
 
 ## 4) Smoke checks covered by scripts
 - `GET /api/health`
@@ -52,15 +38,15 @@
 - Analytics persistence is enabled in compose via `ENABLE_DB_PERSIST=true`.
 - `scripts/e2e-compose-check.sh` is the primary end-to-end validation artifact and should pass before demo/release.
 
-## 6) Release checklist (go/no-go)
+## 6) Final go/no-go checklist
 - [ ] `python-tests` job passes in CI.
+- [ ] `python-postgres-integration` job passes in CI.
 - [ ] `java-tests` job passes in CI.
 - [ ] `flutter-tests` job passes in CI.
 - [ ] `shell-checks` job passes in CI.
 - [ ] `compose-smoke` job passes in CI.
 - [ ] Swagger endpoint and API contracts are in sync.
 - [ ] Demo smoke script passes in local/staging environment.
-
 
 ## 7) Latest validation status (this branch)
 - ✅ Shell scripts syntax checks passed.
@@ -69,4 +55,4 @@
 - ⚠️ Full Flutter test execution could not be executed in this environment (flutter SDK unavailable).
 - ⚠️ Full Python dependency install from package index failed in this environment due proxy/network restrictions.
 
-Use CI `accountflow-ci` as the source of truth for green go/no-go once all jobs pass.
+Use CI `accountflow-ci` as the source of truth for final 95–100% completion status.

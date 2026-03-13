@@ -1,66 +1,39 @@
-# AccountFlow Next Steps and Phase Plan
+# AccountFlow Final Phase Plan
 
 ## Progress estimate
 
-Estimated overall completion: **~78%**.
+Current estimated completion: **~78%**.
 
-Why 78%:
-- Core architecture and feature scaffolding are in place for backend, analytics, frontend, docs, and compose orchestration.
-- Hardening work has progressed (CI pipeline, stronger smoke scripts with DB assertions, persistence tests, role-aware behavior).
-- The remaining gap is mostly integration depth, production polish, and release-grade reliability.
+Target after this final phase: **~95–100%**.
 
-## What is still not done
+## One final phase (combined sprint)
 
-1. **True end-to-end validation in a runnable environment**
-   - Run all services together and verify real interactions against live Postgres and live APIs.
-   - Prove Java tests, Python tests, and Flutter tests pass in a single repeatable workflow.
+Run one unified completion sprint that executes all remaining tracks together:
 
-2. **Analytics persistence hardening**
-   - Add richer risk/data-quality write semantics.
-   - Strengthen transaction boundaries and idempotency behavior.
-   - Add explicit Postgres integration tests (not just unit/service-level tests).
+1. Integrated runtime proof
+   - Run full stack and validate live health + smoke + persistence checks.
+2. Backend/analytics reliability
+   - Execute unit/integration tests and close edge-case failures.
+3. Frontend production polish
+   - Final responsive/accessibility pass and widget/form/navigation confidence.
+4. Release closure
+   - Enforce go/no-go checklist with CI as source of truth.
 
-3. **Frontend production polish**
-   - Final responsive consistency (mobile/tablet/desktop).
-   - Accessibility and UX consistency pass.
-   - Complete non-placeholder widget/form/navigation coverage.
+## Final-phase definition of done
 
-4. **Release-readiness and operational quality gates**
-   - Tighten CI with lint and stricter smoke checks.
-   - Add release checklist and repeatable pre-release verification.
+To claim 95–100%, all of the following must be true:
 
-## Recommended next phases
+- `python-tests` is green in CI.
+- `python-postgres-integration` is green in CI.
+- `java-tests` is green in CI.
+- `flutter-tests` is green in CI.
+- `shell-checks` is green in CI.
+- `compose-smoke` is green in CI.
+- `./scripts/e2e-compose-check.sh` passes in a runnable environment.
+- API docs/contracts are synced with implementation.
 
-### Phase A — Integrated Validation Sprint (highest priority)
-- Goal: prove the system works end-to-end in a real runtime.
-- Deliverables:
-  - Compose-based boot + health validation.
-  - End-to-end smoke script run with DB write assertions.
-  - One command (or CI workflow) that validates all services together.
+## Remaining open risks until completion
 
-### Phase B — Analytics Hardening Sprint
-- Goal: production-grade persistence quality.
-- Deliverables:
-  - Enhanced risk/data-quality logic and deterministic persistence behavior.
-  - Idempotency and transaction handling improvements.
-  - Postgres integration tests for report and flag persistence.
-
-### Phase C — Frontend Completion Sprint
-- Goal: production-polished UX behavior.
-- Deliverables:
-  - Consistent loading/error/empty/success states across all pages.
-  - Final responsive polish and accessibility sweep.
-  - Expanded Flutter widget/form/navigation tests with realistic flows.
-
-### Phase D — Release-Readiness Sprint
-- Goal: stable and repeatable release process.
-- Deliverables:
-  - CI quality gates (build/test/lint/smoke).
-  - Finalized README + runbook + demo script alignment.
-  - Release checklist and go/no-go criteria.
-
-## Suggested acceptance criteria before calling the project "release-ready"
-- All services pass automated tests and smoke checks in CI.
-- Compose-based local run succeeds with verified DB persistence.
-- Frontend pages meet responsive and accessibility baseline.
-- API docs/contracts and implementation are synchronized.
+- Environment/package network restrictions can block local dependency installs.
+- Missing runtime tools (Docker/Flutter) can block local end-to-end proof.
+- CI must be used as the final pass/fail authority where local environment is limited.
