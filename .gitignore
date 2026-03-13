@@ -1,0 +1,8 @@
+.env
+__pycache__/
+.pytest_cache/
+*.pyc
+**/.DS_Store
+backend-java/target/
+frontend-flutter/.dart_tool/
+frontend-flutter/build/
