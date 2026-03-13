@@ -1,12 +1,12 @@
 package com.accountflow.admin.controller;
 
-import com.accountflow.audit.dto.AuditLogResponse;
+import com.accountflow.audit.dto.AuditLogsPageResponse;
 import com.accountflow.audit.service.AuditService;
 import com.accountflow.common.security.DemoSecurity;
-import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -21,10 +21,13 @@ public class AdminAuditController {
   }
 
   @GetMapping("/audit-logs")
-  public List<AuditLogResponse> auditLogs(@RequestHeader(name = "X-Demo-Role", defaultValue = "CUSTOMER") String role,
-                                          @RequestHeader(name = "X-Demo-User-Id", defaultValue = "1") Long userId) {
+  public AuditLogsPageResponse auditLogs(
+      @RequestHeader(name = "X-Demo-Role", defaultValue = "CUSTOMER") String role,
+      @RequestHeader(name = "X-Demo-User-Id", defaultValue = "1") Long userId,
+      @RequestParam(name = "page", required = false, defaultValue = "0") int page,
+      @RequestParam(name = "size", required = false, defaultValue = "20") int size) {
     demoSecurity.requireAdmin(role);
     auditService.write(userId, "ADMIN_VIEW_AUDIT_LOGS", "AUDIT_LOG", null, "{}");
-    return auditService.latest();
+    return auditService.page(page, size);
   }
 }
