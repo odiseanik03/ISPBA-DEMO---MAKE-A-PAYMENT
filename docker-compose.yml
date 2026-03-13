@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: accountflow-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-accountflow}
+      POSTGRES_USER: ${POSTGRES_USER:-accountflow}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-accountflow}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend-java:
+    build:
+      context: ./backend-java
+    container_name: accountflow-backend-java
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-accountflow}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-accountflow}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-accountflow}
+      SERVER_PORT: ${SPRING_PORT:-8080}
+    ports:
+      - "${SPRING_PORT:-8080}:8080"
+    depends_on:
+      - postgres
+
+  analytics-python:
+    build:
+      context: ./analytics-python
+    container_name: accountflow-analytics-python
+    environment:
+      DATABASE_URL: postgresql+psycopg://accountflow:accountflow@postgres:5432/accountflow
+      PORT: ${ANALYTICS_PORT:-8090}
+      ENABLE_DB_PERSIST: true
+    ports:
+      - "${ANALYTICS_PORT:-8090}:8090"
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
